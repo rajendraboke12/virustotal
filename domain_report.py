@@ -1,13 +1,17 @@
 import requests
+import yaml
 from pprint import pprint
 
-def fun1(inward_arr,var_arr):
+with open("/home/rajendra/Desktop/apikey.yml", 'r') as ymlfile:
+        apikey = yaml.load(ymlfile)
+
+def get_domain_report(inward_arr,var_arr):
+
     for i in inward_arr:
         if (var_arr[0] in i):
             domainname=i[var_arr[0]]
             url = 'https://www.virustotal.com/vtapi/v2/domain/report'
-            params = {'apikey':'6ef5a259eabefa228a1852942416eff30a84a56105c835d37f2f4acd8a93c5fd',
-              'domain':domainname}
+            params = {'apikey': apikey,'domain':domainname}
             response = requests.get(url, params=params)
             resp = response.json()
             try:
@@ -30,5 +34,5 @@ def fun1(inward_arr,var_arr):
 
 inward_arr = [{"domain":"netmonastery.com"},{"domain":"google.com"},{"domain":"gmail.com"}]
 var_arr = ["domain"]
-inward_arr=fun1(inward_arr,var_arr)
+inward_arr=get_domain_report(inward_arr,var_arr)
 pprint(inward_arr)
