@@ -2,7 +2,8 @@ import requests
 import yaml
 from pprint import pprint
 
-with open("/home/rajendra/Desktop/info.yml", 'r') as ymlfile:
+path = os.environ["WORKDIR"]
+with open(path + "/lookup_plugins/virustotal/info.yml", 'r')) as ymlfile:
     info = yaml.load(ymlfile)
 
 def get_domain_report(inward_arr,var_arr):
@@ -14,7 +15,6 @@ def get_domain_report(inward_arr,var_arr):
             params = {'apikey': info["apikey"],'domain':domainname}
             response = requests.get(url, params=params)
             resp = response.json()
-            #pprint(resp)
             try:
                 i["$name"]=info["name"].upper()
             except:
@@ -60,13 +60,3 @@ def get_ip_report(inward_arr,var_arr):
                 i["$country"]= 0
     outward_arr=inward_arr
     return outward_arr
-
-inward_arr = [{"domain":"netmonasfsfsfcsdtery.com"},{"domain":"google.com"},{"domain":"gmail.com"}]
-var_arr = ["domain"]
-outward_arr=get_domain_report(inward_arr,var_arr)
-pprint(outward_arr)
-
-inward_arr = [{"ip":"216.58.199.165"}]
-var_arr = ["ip"]
-outward_arr=get_ip_report(inward_arr,var_arr)
-pprint(outward_arr)
