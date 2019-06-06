@@ -1,7 +1,7 @@
 import requests
 from pprint import pprint
 
-def fun1(inward_arr,var_arr):
+def get_ip_report(inward_arr,var_arr):
     for i in inward_arr:
         if (var_arr[0] in i):
             ip=i[var_arr[0]]
@@ -10,7 +10,6 @@ def fun1(inward_arr,var_arr):
               'ip':ip}
             response = requests.get(url, params=params)
             resp = response.json()
-            #pprint(resp)
             try:
                 i["$country"]=resp["country"]
             except:
@@ -19,5 +18,5 @@ def fun1(inward_arr,var_arr):
 
 inward_arr = [{"ip":"216.58.199.165"}]
 var_arr = ["ip"]
-inward_arr=fun1(inward_arr,var_arr)
+inward_arr=get_ip_report(inward_arr,var_arr)
 pprint(inward_arr)
